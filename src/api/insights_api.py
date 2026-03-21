@@ -20,6 +20,7 @@ async def generate_report(request: InsightsRequest):
         result = await insights_service.generate(
             country = request.country,
             metrics = request.metrics,
+            group_columns = request.group_columns
         )
     
         return Response(

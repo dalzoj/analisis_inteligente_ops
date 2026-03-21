@@ -1,8 +1,6 @@
 from src.core import data_loader, prompt_builder
-from src.insights import correlation, anomaly, trend
+from src.insights import correlation, anomaly, trend, benchmark
 from src.llm import llm_client
-
-COUNTRY = None
 
 def _filter_by_country(df, country):
     print('INFO: insights_service -> _filter_by_country')
@@ -10,6 +8,7 @@ def _filter_by_country(df, country):
     if country:
         return df[df["COUNTRY"] == country.upper()]
     return df
+
 
 def _filter_by_metrics(df, metrics):
     print('INFO: insights_service -> _filter_by_metrics')
@@ -52,6 +51,19 @@ def _format_findings_for_llm(all_findings):
                 f"{f['trend']} por {f['weeks_count']}+ semanas "
                 f"(Desde {f['start_value']} hasta {f['end_value']})"
             )
+
+    print('INFO: insights_service -> _format_findings_for_llm -> benchmarks')  
+    if all_findings["benchmarks"]:
+        lines.append("\nBENCHMARKING:")
+        for f in all_findings["benchmarks"]:
+            lines.append(
+                f"  - {f['zone']} ({f['country']}, {f['zone_type']}): {f['metric']} "
+                f"es {f['deviation_pct']}% por debajo de la mediana del grupo ({f['group_median']})"
+            )
+            print(
+                f"  - {f['zone']} ({f['country']}, {f['zone_type']}): {f['metric']} "
+                f"es {f['deviation_pct']}% por debajo de la mediana del grupo ({f['group_median']})"
+            )
  
     return "\n".join(lines)
 
@@ -74,23 +86,27 @@ async def _create_llm_summary(insights_summary, country):
     #return await llm_client.basic_call(insights_prompt, user_message)
 
 
-async def generate(country, metrics):
+async def generate(country, metrics, group_columns):
     print('INFO: insights_service -> generate')
 
     print('country',country)
     print('metrics',metrics)
+    print('group_columns',group_columns)
 
     df_metrics = data_loader.get_df_metrics()
     df_metrics = _filter_by_country(df_metrics, country)
     df_metrics = _filter_by_metrics(df_metrics, metrics)
-
+    
     print('df_metrics',df_metrics['METRIC'].unique().tolist())
 
     insights_findings = {
         "correlations": correlation.detect(df_metrics),
         "anomalies": anomaly.detect(df_metrics),
         "trends": trend.detect(df_metrics),
+        "benchmark": benchmark.detect(df_metrics, group_columns),
     }
+
+    print('proceso completo')
 
     insights_summary = _format_findings_for_llm(insights_findings)
     insights_summary = await _create_llm_summary(insights_summary, country)
