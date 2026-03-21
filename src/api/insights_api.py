@@ -17,7 +17,10 @@ async def generate_report(request: InsightsRequest):
     print('INFO: Call /generate_report')
     
     try:
-        result = await insights_service.generate(country=request.country)
+        result = await insights_service.generate(
+            country = request.country,
+            metrics = request.metrics,
+        )
     
         return Response(
             type_response = 'reporte_ejecutivo',
