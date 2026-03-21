@@ -52,19 +52,17 @@ def _format_findings_for_llm(all_findings):
                 f"(Desde {f['start_value']} hasta {f['end_value']})"
             )
 
-    print('INFO: insights_service -> _format_findings_for_llm -> benchmarks')  
-    if all_findings["benchmarks"]:
-        lines.append("\nBENCHMARKING:")
-        for f in all_findings["benchmarks"]:
+    print('INFO: insights_service -> _format_findings_for_llm -> benchmark')  
+    if all_findings["benchmark"]:
+        lines.append("\n BENCHMARKING:")
+        for f in all_findings["benchmark"]:
             lines.append(
-                f"  - {f['zone']} ({f['country']}, {f['zone_type']}): {f['metric']} "
-                f"es {f['deviation_pct']}% por debajo de la mediana del grupo ({f['group_median']})"
+                f"  - [{f['week']}] {f['zone']} ({f['city']}, {f['country']}): "
+                f"{f['metric']} está {abs(f['deviation_pct'])}% "
+                f"{f['flag']} "
+                f"de la mediana de la agrupación por "
+                f"(zona: {f['zone_value']}, mediana: {f['group_median']})"
             )
-            print(
-                f"  - {f['zone']} ({f['country']}, {f['zone_type']}): {f['metric']} "
-                f"es {f['deviation_pct']}% por debajo de la mediana del grupo ({f['group_median']})"
-            )
- 
     return "\n".join(lines)
 
 async def _create_llm_summary(insights_summary, country):
@@ -96,7 +94,7 @@ async def generate(country, metrics, group_columns):
     df_metrics = data_loader.get_df_metrics()
     df_metrics = _filter_by_country(df_metrics, country)
     df_metrics = _filter_by_metrics(df_metrics, metrics)
-    
+        
     print('df_metrics',df_metrics['METRIC'].unique().tolist())
 
     insights_findings = {
@@ -106,9 +104,8 @@ async def generate(country, metrics, group_columns):
         "benchmark": benchmark.detect(df_metrics, group_columns),
     }
 
-    print('proceso completo')
-
     insights_summary = _format_findings_for_llm(insights_findings)
+    print(insights_summary)
     insights_summary = await _create_llm_summary(insights_summary, country)
 
     return {

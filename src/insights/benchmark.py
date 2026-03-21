@@ -8,9 +8,9 @@ GROUP_COLUMNS = ["ZONE_TYPE", "ZONE_PRIORITIZATION", "CITY"]
 
 
 def detect(df, group_columns):
-    try:
-        print('INFO: benchmark -> detect')
+    print('INFO: benchmark -> detect')
 
+    try:
         min_zones = config.getint("insights", "benchmark_min_zones_per_group")
         threshold = config.getfloat("insights", "benchmark_deviation_threshold")
         num_weeks = config.getint("insights", "benchmark_weeks")
@@ -57,7 +57,7 @@ def detect(df, group_columns):
                         "zone_value": round(zone_value, 4),
                         "group_median": round(median, 4),
                         "deviation_pct": round(deviation * 100, 2),
-                        "flag": "underperforming" if is_underperforming else "outstanding",
+                        "flag": "bajo rendimiento" if is_underperforming else "buen rendimiento",
                     })
 
         return findings
