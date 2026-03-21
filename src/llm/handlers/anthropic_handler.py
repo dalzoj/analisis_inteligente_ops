@@ -30,7 +30,7 @@ class AnthropicHandler(LLMBase):
 
             return {
                 "answer": response.content[0].text,
-                "model": response.model,
+                "model": self.model_name,
                 "tokens_in": response.usage.input_tokens,
                 "tokens_out": response.usage.output_tokens,
             }

@@ -15,3 +15,8 @@ def _load_prompt_file(filename):
 def get_chat_prompt():
     prompt_name = config["prompts"]["chat"]
     return _load_prompt_file(prompt_name)
+
+
+def get_code_gen_prompt():
+    prompt_name = config["prompts"]["code_gen"]
+    return _load_prompt_file(prompt_name)
