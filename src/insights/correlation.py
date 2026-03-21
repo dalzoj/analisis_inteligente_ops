@@ -1,5 +1,4 @@
 import configparser
-import pandas as pd
 
 config = configparser.ConfigParser()
 config.read("config/config.cfg")
@@ -69,4 +68,5 @@ def detect(df):
             })
 
     findings.sort(key=lambda x: abs(x["correlation"]), reverse=True)
+    
     return findings
