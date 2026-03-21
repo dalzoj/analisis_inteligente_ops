@@ -15,18 +15,20 @@ def _format_to_string(result) :
 
 
 async def _interpret_result(question, result_text):
-    new_prompt = (
-        f"El query de datos respondió: \n"
+
+    chat_prompt = prompt_builder.get_chat_prompt()
+
+    new_question = (
+        f"Yo pregunté: {question}\n\n"
+        f"Los resultados fueron:\n"
         f"{result_text}\n\n"
-        f"Limpia la respuesta para presentar según la pregunta del usuario en formato Markdown"
+        f"Limpia y presenta la respuesta en formato Markdown"
     )
-    print('new_prompt',new_prompt)
-    return await llm_client.basic_call(new_prompt, question)
+
+    return await llm_client.basic_call(chat_prompt, new_question)
 
 
 async def get_basic_metrics_ops_answer(question):
-    
-    chat_prompt = prompt_builder.get_chat_prompt()
     
     python_code_answer = await _generate_code(question)
 
@@ -37,12 +39,7 @@ async def get_basic_metrics_ops_answer(question):
         "tokens_out": python_code_answer['tokens_out'],
     }
 
-    print('answer: ', response['answer'])
-
     success, result, error = code_executor.run(response['answer'])
-
-    print('result: ',result)
-    print('error: ',error)
 
     if success:
         result_text = _format_to_string(result)
