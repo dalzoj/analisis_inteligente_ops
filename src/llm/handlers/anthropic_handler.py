@@ -31,8 +31,8 @@ class AnthropicHandler(LLMBase):
             return {
                 "answer": response.content[0].text,
                 "model": response.model,
-                "tokens_in": response.usage.output_tokens,
-                "tokens_out": response.usage.input_tokens,
+                "tokens_in": response.usage.input_tokens,
+                "tokens_out": response.usage.output_tokens,
             }
 
         except Exception as error:
