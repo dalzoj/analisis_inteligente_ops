@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from src.services import chat_service
-from src.models.chat_models import ChatRequestBasic
+from src.models.chat_models import ChatRequestBasic, ChatResponse
  
 router = APIRouter(prefix="/chat")
 
@@ -20,7 +20,12 @@ async def ask(request: ChatRequestBasic):
             question = request.question
         )
 
-        return response["answer"]
+        return ChatResponse(
+            answer = response["answer"],
+            model = response["model"],
+            tokens_in = response["tokens_in"],
+            tokens_out = response["tokens_out"]
+        )
  
     except Exception as error:
         raise HTTPException(status_code=500, detail=str(error))

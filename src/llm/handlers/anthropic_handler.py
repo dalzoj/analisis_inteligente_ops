@@ -5,7 +5,7 @@ from src.llm.llm_base import LLMBase
 class AnthropicHandler(LLMBase):
     
     def __init__(self, model_name, max_tokens, temperature):
-        print('INFO: Creating AnthropicHandler')
+        print('INFO: Initializing AnthropicHandler')
         
         self.model_name = model_name
         self.max_tokens = max_tokens
@@ -14,11 +14,6 @@ class AnthropicHandler(LLMBase):
 
     async def basic_call(self, system_prompt, user_message):
         print('INFO: Basic Call Anthropic')
-        print('system_prompt',system_prompt)
-        print('user_message',user_message)
-        print('self.max_tokens',self.max_tokens)
-        print('self.temperature',self.temperature)
-
 
         try:
 
@@ -32,13 +27,13 @@ class AnthropicHandler(LLMBase):
                     "content": user_message
                 }]
             )
-            print('-------------------------------------------')
-            print(response)
-            print('-------------------------------------------')
-            print(response.content[0].text)
-            print('-------------------------------------------')
 
-            return response.content[0].text
+            return {
+                "answer": response.content[0].text,
+                "model": response.model,
+                "tokens_in": response.usage.output_tokens,
+                "tokens_out": response.usage.input_tokens,
+            }
 
         except Exception as error:
             print(f"ERROR: {error}")
