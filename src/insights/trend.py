@@ -14,7 +14,7 @@ def _is_consistently_improving(values):
 
 
 def detect(df):
-    print('INFO: anomaly -> trend')
+    print('INFO: trend -> detect')
 
     week_cols = [c for c in df.columns if c.startswith("L") and c.endswith("W_ROLL")]
 
