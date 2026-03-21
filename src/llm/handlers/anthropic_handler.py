@@ -29,10 +29,10 @@ class AnthropicHandler(LLMBase):
             )
 
             return {
-                "answer": response.content[0].text,
-                "model": self.model_name,
+                "model_name": self.model_name,
                 "tokens_in": response.usage.input_tokens,
                 "tokens_out": response.usage.output_tokens,
+                "answer": response.content[0].text,
             }
 
         except Exception as error:

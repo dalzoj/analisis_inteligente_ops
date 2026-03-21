@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.api import chat_api
+from src.api import chat_api, insights_api
  
 app = FastAPI(
     title="Análisis Inteligente Operaciones",
@@ -8,6 +8,7 @@ app = FastAPI(
 )
 
 app.include_router(chat_api.router)
+app.include_router(insights_api.router)
  
 @app.get("/health")
 async def health_check():
