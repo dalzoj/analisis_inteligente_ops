@@ -10,11 +10,11 @@ config.read("config/config.cfg")
 
 
 def create_handler():
+    print('INFO: llm_factory -> create_handler')
 
     resolved_provider = config['llm']['name']
     
     if resolved_provider == 'anthropic':
-        print('INFO: Create Anthropic Handler')
         
         model_name = config['llm_anthropic']['model_name']
         max_tokens  = config.getint('llm_anthropic', 'max_tokens')

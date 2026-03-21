@@ -4,12 +4,16 @@ from src.llm import llm_client
 
 
 def _filter_by_country(df, country):
+    print('INFO: insights_service -> _filter_by_country')
+
     if country:
         return df[df["COUNTRY"] == country.upper()]
     return df
 
 
 def _format_findings_for_llm(all_findings):
+    print('INFO: insights_service -> _format_findings_for_llm')
+
     lines = []
  
     if all_findings["correlations"]:
@@ -24,6 +28,7 @@ def _format_findings_for_llm(all_findings):
 
 
 async def _create_llm_summary(insights_summary):
+    print('INFO: insights_service -> _create_llm_summary')
 
     insights_prompt = prompt_builder.get_chat_prompt()
  
@@ -37,6 +42,7 @@ async def _create_llm_summary(insights_summary):
 
 
 async def generate(country):
+    print('INFO: insights_service -> generate')
 
     df_metrics = data_loader.get_df_metrics()
     df_metrics = _filter_by_country(df_metrics, country)
@@ -46,14 +52,11 @@ async def generate(country):
     }
 
     insights_summary = _format_findings_for_llm(insights_findings)
-    
     insights_summary = await _create_llm_summary(insights_summary)
-    
-    response = {
+
+    return {
         "answer": insights_summary['answer'],
         "model_name": insights_summary['model_name'],
         "tokens_in": insights_summary['tokens_in'],
         "tokens_out": insights_summary['tokens_out'],
     }
-
-    return response

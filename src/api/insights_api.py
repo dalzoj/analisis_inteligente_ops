@@ -8,12 +8,14 @@ router = APIRouter(prefix="/insights")
 
 @router.get("/health")
 async def health():
-    print('INFO: /health')
+    print('INFO: Call /health')
     return {"status": "ok"}
 
 
 @router.post("/generate_report", response_model=Response)
 async def generate_report(request: InsightsRequest):
+    print('INFO: Call /generate_report')
+    
     try:
         result = await insights_service.generate(country=request.country)
     

@@ -4,8 +4,7 @@ import traceback
 from src.core import data_loader
 
 def run(code):
-
-    print('INFO: Ejecución de Código')
+    print('INFO: code_executor -> run')
     
     df_metrics = data_loader.get_df_metrics()
     df_orders = data_loader.get_df_orders()

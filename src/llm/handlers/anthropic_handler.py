@@ -5,15 +5,15 @@ from src.llm.llm_base import LLMBase
 class AnthropicHandler(LLMBase):
     
     def __init__(self, model_name, max_tokens, temperature):
-        print('INFO: Initializing AnthropicHandler')
+        print('INFO: anthropic_handler -> __init__')
         
         self.model_name = model_name
         self.max_tokens = max_tokens
-        self. temperature = temperature
+        self.temperature = temperature
         self.client = anthropic.AsyncAnthropic(api_key = os.getenv("ANTHROPIC_API_KEY"))
 
     async def basic_call(self, system_prompt, user_message):
-        print('INFO: Basic Call Anthropic')
+        print('INFO: anthropic_handler -> basic_call')
 
         try:
 

@@ -8,13 +8,13 @@ router = APIRouter(prefix="/chat")
 
 @router.get("/health")
 async def health():
-    print('INFO: /health')
+    print('INFO: Call /health')
     return {"status": "ok"}
 
 
-@router.post("/basic_metrics_ops")
+@router.post("/basic_metrics_ops", response_model=Response)
 async def ask_metrics_ops(request: ChatRequest):
-    print('INFO: /basic_metrics_ops')
+    print('INFO: Call /basic_metrics_ops')
 
     try:
         if request.type_request == 'basic':
@@ -25,7 +25,7 @@ async def ask_metrics_ops(request: ChatRequest):
         return Response(
             type_response = 'metricas_ops',
             mode = request.type_request,
-            model = result["model"],
+            model_name = result["model_name"],
             tokens_in = result["tokens_in"],
             tokens_out = result["tokens_out"],
             answer = result["answer"],

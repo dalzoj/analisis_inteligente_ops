@@ -10,6 +10,8 @@ _str_cols     = ["COUNTRY", "CITY", "ZONE", "METRIC"]
 
 
 def get_df_metrics():
+    print('INFO: data_loader -> get_df_metrics')
+
     path = os.path.join(config['paths']['metrics_data'])
     return pd.read_csv(
         path, sep=";", decimal=",",
@@ -22,6 +24,8 @@ def get_df_metrics():
 
 
 def get_df_orders():
+    print('INFO: data_loader -> get_df_orders')
+
     path = os.path.join(config['paths']['orders_data'])
     return pd.read_csv(
         path, sep=";", decimal=",",

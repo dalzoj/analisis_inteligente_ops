@@ -6,13 +6,17 @@ config.read("config/config.cfg")
 
 
 def _one_month_mean(df):
+    print('INFO: correlation -> _one_month_mean')
+
     week_cols = [c for c in df.columns if c.startswith("L") and c.endswith("W_ROLL")]
     week_cols_sorted = sorted(week_cols)
     recent = week_cols_sorted[:4]
     return df[recent].mean(axis=1)
 
 
-def detect(df: pd.DataFrame) -> list[dict]:
+def detect(df):
+    print('INFO: correlation -> detect')
+
     threshold = config.getfloat("insights", "correlation_threshold")
 
     df = df.copy()
