@@ -70,6 +70,8 @@ async def generate(country):
         "anomalies": anomaly.detect(df_metrics),
     }
 
+    print('anomalies',insights_findings['correlations'])
+
     insights_summary = _format_findings_for_llm(insights_findings)
     
     insights_summary = await _create_llm_summary(insights_summary, country)

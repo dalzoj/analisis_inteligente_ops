@@ -5,10 +5,11 @@ config = configparser.ConfigParser()
 config.read("config/config.cfg")
 
 
-def detect(df, n_weeks=2):
+def detect(df):
     print('INFO: anomaly -> detect')
 
-    threshold = threshold = config.getint("insights", "anomaly_weeks")
+    n_weeks = config.getint("insights", "anomaly_weeks")
+    threshold = config.getfloat("insights", "anomaly_threshold")
     
     week_cols = [c for c in df.columns if c.startswith("L") and c.endswith("W_ROLL")]
 
