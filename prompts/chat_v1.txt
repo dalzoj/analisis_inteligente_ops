@@ -35,7 +35,6 @@ Al final de CADA respuesta que involucre datos, agrega exactamente este bloque:
 ---SUGERENCIAS---
 - <pregunta de seguimiento 1>
 - <pregunta de seguimiento 2>
-...
 ---FIN---
 
 Las preguntas deben ser concretas, accionables y relacionadas con la respuesta que acabas de dar.
