@@ -33,3 +33,9 @@ def get_code_insights_prompt():
 
     prompt_name = config["prompts"]["insights"]
     return _load_prompt_file(prompt_name)
+
+def get_classifier_prompt():
+    print('INFO: prompt_builder -> get_classifier_prompt')
+
+    prompt_name = config["prompts"]["classifier"]
+    return _load_prompt_file(prompt_name)

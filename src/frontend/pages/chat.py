@@ -31,11 +31,25 @@ def render():
     st.title("Bot Conversacional")
     st.caption("Realiza preguntas sobre las métricas operacionales y recibe respuestas precisas.")
 
+    mode = st.radio(
+        "Modo de conversación",
+        options=["basic", "history"],
+        format_func=lambda m: "💬 Solo esta interacción" if m == "basic" else "🧠 Conversacional (recuerda el contexto)",
+        horizontal=True,
+    )
+
+    if mode == "history":
+        st.info("El bot recordará las últimas interacciones para mantener el contexto de la conversación.", icon="🧠")
+
+    st.markdown("---")
+
     _render_history()
 
     question = st.chat_input("Pregunta algo, ejemplo: '¿Cuáles son las 5 zonas con mayor % Lead Penetration esta semana?'")
 
     if question:
+        history_to_send = _get_history() if mode == "history" else []
+
         _add_to_history("user", question)
 
         with st.chat_message("user"):
@@ -44,7 +58,7 @@ def render():
         with st.chat_message("assistant"):
             with st.spinner("Analizando información..."):
                 try:
-                    result = send_question(question)
+                    result = send_question(question, mode, history_to_send)
 
                     answer      = result.get("answer", "No answer returned.")
                     model_name  = result.get("model_name", "")

@@ -13,14 +13,20 @@ async def health():
     return {"status": "ok"}
 
 
-@router.post("/basic_metrics_ops", response_model=Response)
+@router.post("/metrics_ops", response_model=Response)
 async def ask_metrics_ops(request: ChatRequest):
-    print('INFO: Call /basic_metrics_ops')
+    print('INFO: Call /metrics_ops')
 
     try:
         if request.type_request == 'basic':
             result = await chat_service.get_basic_metrics_ops_answer(
                 question = request.question,
+            )
+            
+        elif request.type_request == 'history':
+            result = await chat_service.get_history_metrics_ops_answer(
+                question = request.question,
+                history  = request.history or [],
             )
 
         response = Response(

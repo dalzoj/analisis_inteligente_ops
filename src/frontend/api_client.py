@@ -6,13 +6,14 @@ TIMEOUT_CHAT = 90
 TIMEOUT_INSIGHTS = 180 
 
 
-def send_question(question):
+def send_question(question, mode="basic", history=None):
     payload = {
         "question": question,
-        "type_request": "basic",
+        "type_request": mode,
+        "history": history or [],
     }
     with httpx.Client(timeout=TIMEOUT_CHAT) as client:
-        response = client.post(f"{BASE_URL}/chat/basic_metrics_ops", json=payload)
+        response = client.post(f"{BASE_URL}/chat/metrics_ops", json=payload)
         response.raise_for_status()
         return response.json()
 

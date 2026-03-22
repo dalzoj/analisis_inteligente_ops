@@ -39,5 +39,26 @@ class AnthropicHandler(LLMBase):
             print(f"ERROR: {error}")
             raise error
         
-    def history_call():
-        pass
+    async def history_call(self, system_prompt, messages):
+        print('INFO: anthropic_handler -> history_call')
+
+        try:
+
+            response = await self.client.messages.create(
+                model = self.model_name,
+                max_tokens = self.max_tokens,
+                temperature = self.temperature,
+                system = system_prompt,
+                messages = messages
+            )
+
+            return {
+                "model_name": self.model_name,
+                "tokens_in": response.usage.input_tokens,
+                "tokens_out": response.usage.output_tokens,
+                "answer": response.content[0].text,
+            }
+
+        except Exception as error:
+            print(f"ERROR: {error}")
+            raise error

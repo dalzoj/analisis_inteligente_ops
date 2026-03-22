@@ -1,0 +1,7 @@
+Clasifica la siguiente pregunta.
+
+Responde únicamente con una de estas dos palabras:
+- DATA: si la pregunta requiere consultar, filtrar, comparar o analizar métricas y datos operacionales.
+- CHAT: si la pregunta es conversacional, un saludo, una pregunta sobre la conversación anterior, o cualquier cosa que no requiera consultar datos.
+
+No expliques nada. Solo responde DATA o CHAT.
