@@ -130,9 +130,8 @@ async def generate(country, metrics, group_columns):
     }
 
     insights_summary = _format_findings_for_llm(insights_findings)
-    print(example)
-    #insights_summary = await _create_llm_summary(insights_summary, country)
-    insights_summary = await _create_llm_summary(example, country)
+    insights_summary = await _create_llm_summary(insights_summary, country)
+    #insights_summary = await _create_llm_summary(example, country)
 
     return {
         "answer": insights_summary['answer'],

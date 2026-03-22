@@ -17,4 +17,5 @@ Para cada hallazgo:
 
 Sé directo y enfócate en el negocio.
 Evita la jerga técnica.
-Redacta como si presentaras el informe a un gerente de operaciones que necesita tomar medidas de inmediato.
+Redacta como si presentaras el informe a un gerente de operaciones que necesita tomar medidas de inmediato, claro y conciso.
+No es necesario extenderse.
