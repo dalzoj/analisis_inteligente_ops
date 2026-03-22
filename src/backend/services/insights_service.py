@@ -93,7 +93,7 @@ def _format_findings_for_llm(all_findings):
 async def _create_llm_summary(insights_summary, country):
     print('INFO: insights_service -> _create_llm_summary')
 
-    insights_prompt = prompt_builder.get_chat_prompt()
+    insights_prompt = prompt_builder.get_code_insights_prompt()
 
     user_message = (
         f"Estos son los hallazgos encontrados en el análisis:\n"
