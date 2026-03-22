@@ -22,7 +22,6 @@ def detect(df, group_columns):
         grouped = df.groupby(group_dims)
 
         findings = []
-        flag_above = False
 
         for group_keys, group in grouped:
             if len(group) < min_zones:
@@ -41,7 +40,7 @@ def detect(df, group_columns):
                     deviation = (zone_value - median) / abs(median)
 
                     is_underperforming = deviation <= -abs(threshold)
-                    is_outstanding = flag_above and deviation >= abs(threshold)
+                    is_outstanding = deviation >= abs(threshold)
 
                     if not (is_underperforming or is_outstanding):
                         continue
@@ -57,7 +56,7 @@ def detect(df, group_columns):
                         "zone_value": round(zone_value, 4),
                         "group_median": round(median, 4),
                         "deviation_pct": round(deviation * 100, 2),
-                        "flag": "bajo rendimiento" if is_underperforming else "buen rendimiento",
+                        "flag": "bajo rendimiento" if is_underperforming else "oportunidad destacada",
                     })
 
         return findings
