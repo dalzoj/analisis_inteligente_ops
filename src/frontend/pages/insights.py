@@ -115,7 +115,7 @@ def render():
         metrics_param = selected_metrics if selected_metrics else None
         group_columns_param = selected_group_columns if selected_group_columns else None
 
-        with st.spinner("Realizando un análisis en todas las zonas… esto puede tardar un minuto."):
+        with st.spinner("Realizando un análisis, esto puede tardar varios minutos..."):
             try:
                 result = generate_insights(
                     country=country_param,
