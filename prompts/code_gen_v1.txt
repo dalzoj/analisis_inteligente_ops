@@ -39,11 +39,20 @@ Reglas de codificación:
 - Siempre guarda el resultado final en una variable llamada `result`.
 - `result` debe ser un DataFrame, un número o una cadena de texto.
 - No uses `print()`, `display()` ni `show()`.
-- No importes ninguna biblioteca; pandas (pd) y numpy (np) ya están disponibles.
+- No importes ninguna biblioteca; pandas (pd), numpy (np) y plotly express (px) ya están disponibles.
 - Mantén el código simple y legible.
 - Si la pregunta trata sobre tendencias, usa las columnas L8W_ROLL a L0W_ROLL (en df_metrics) o L8W a L0W (en df_orders).
 - Si la pregunta trata sobre la semana actual, usa L0W_ROLL / L0W.
 - Si la pregunta trata sobre una comparación con la semana anterior, usa L0W vs L1W (o L0W_ROLL vs L1W_ROLL).
+
+Reglas para la variable 'chart':
+- Siempre declara 'chart = None' al inicio del código.
+- Analiza la pregunta del usuario y decide si una visualización aportaría valor para entender la respuesta.
+- Si decides que sí, elige el tipo de gráfico de plotly express (px) que mejor represente los datos: px.line, px.bar, px.scatter, px.box, px.pie, o cualquier otro que consideres el más apropiado.
+- Genera la figura y asigna 'chart = fig.to_dict()'.
+- Si la pregunta es un valor puntual, una afirmación simple o el resultado ya es autoexplicativo sin gráfico, deja 'chart = None'.
+- Usa títulos cortos y en español en los gráficos (title=, labels=).
+- No apliques template; deja el tema por defecto de plotly.
 
 Devuelve solo el código Python, sin explicaciones, sin formato Markdown ni comillas invertidas.
 Si la pregunta requiere inferencia, usa los datos como base y devuelve un DataFrame con lo que encontraste o inferiste.

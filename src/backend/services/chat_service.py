@@ -58,9 +58,10 @@ async def get_basic_metrics_ops_answer(question):
         "model_name": python_code_answer['model_name'],
         "tokens_in": python_code_answer['tokens_in'],
         "tokens_out": python_code_answer['tokens_out'],
+        "chart": None,
     }
 
-    success, result, error = code_executor.run(response['answer'])
+    success, result, chart, error = code_executor.run(response['answer'])
 
     if success:
         result_text = _format_to_string(result)
@@ -69,8 +70,15 @@ async def get_basic_metrics_ops_answer(question):
         response['answer'] = interpret_answer['answer']
         response['tokens_in'] += interpret_answer['tokens_in']
         response['tokens_out'] += interpret_answer['tokens_out']
+        response['chart'] = chart
         
         return response
+    
+    print(f'ERROR: chat_service -> get_basic_metrics_ops_answer -> code execution failed: {error}')
+    
+    response['answer'] = "No pude procesar tu pregunta. Por favor intenta reformularla."
+    
+    return response
 
 
 async def get_history_metrics_ops_answer(question, history):
@@ -85,6 +93,7 @@ async def get_history_metrics_ops_answer(question, history):
         "model_name": classification['model_name'],
         "tokens_in": classification['tokens_in'],
         "tokens_out": classification['tokens_out'],
+        "chart": None,
     }
 
     chat_prompt = prompt_builder.get_chat_prompt()
@@ -105,7 +114,7 @@ async def get_history_metrics_ops_answer(question, history):
     response['tokens_in'] += python_code_answer['tokens_in']
     response['tokens_out'] += python_code_answer['tokens_out']
 
-    success, result, error = code_executor.run(python_code_answer['answer'])
+    success, result, chart, error = code_executor.run(python_code_answer['answer'])
 
     if success:
         result_text = _format_to_string(result)
@@ -123,5 +132,12 @@ async def get_history_metrics_ops_answer(question, history):
         response['answer'] = interpret_answer['answer']
         response['tokens_in'] += interpret_answer['tokens_in']
         response['tokens_out'] += interpret_answer['tokens_out']
+        response['chart'] = chart
 
         return response
+
+    print(f'ERROR: chat_service -> get_basic_metrics_ops_answer -> code execution failed: {error}')
+    
+    response['answer'] = "No pude procesar tu pregunta. Por favor intenta reformularla."
+    
+    return response

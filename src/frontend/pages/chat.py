@@ -24,10 +24,10 @@ def _render_history():
             st.markdown(message["content"])
 
 
-def _render_chart(chart_data):
-    if not chart_data:
+def _render_chart(chart):
+    if not chart:
         return
-    fig = go.Figure(chart_data)
+    fig = go.Figure(chart)
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -71,7 +71,10 @@ def render():
 
                     st.markdown(answer)
 
+                    print(result.get("chart"))
+
                     _render_chart(result.get("chart"))
+
 
                     st.caption(
                         f"🤖 {model_name}  ·  📥 {tokens_in} tokens in  ·  📤 {tokens_out} tokens out"

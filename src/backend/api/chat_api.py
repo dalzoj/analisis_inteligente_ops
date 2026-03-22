@@ -36,6 +36,7 @@ async def ask_metrics_ops(request: ChatRequest):
             tokens_in = result["tokens_in"],
             tokens_out = result["tokens_out"],
             answer = result["answer"],
+            chart = result["chart"],
         )
 
         save_response(response)
