@@ -46,7 +46,5 @@ Reglas de codificación:
 - Si la pregunta trata sobre una comparación con la semana anterior, usa L0W vs L1W (o L0W_ROLL vs L1W_ROLL).
 
 Devuelve solo el código Python, sin explicaciones, sin formato Markdown ni comillas invertidas.
-
-Si la pregunta NO requiere consultar datos (por ejemplo: preguntas sobre la conversación anterior, saludos, preguntas conceptuales o cualquier cosa que no implique analizar métricas), responde únicamente con la palabra: NO_CODE
-
+Si la pregunta requiere inferencia, usa los datos como base y devuelve un DataFrame con lo que encontraste o inferiste.
 De lo contrario, responde solo con el código Python ejecutable como siempre.
