@@ -10,12 +10,26 @@ Sistema basado en IA que democratiza acceso a estos datos e información, y auto
 
 ## Instalación
 
+**1. Crea y activa un entorno virtual**
+```bash
+# Crear el entorno virtual
+python -m venv .venv
+
+# Activar en macOS/Linux
+source .venv/bin/activate
+
+# Activar en Windows
+.venv\Scripts\activate
+```
+
+**2. Instala las dependencias**
 ```bash
 pip install -r requirements.txt
 ```
 
-Crea un archivo `.env` en la raíz del proyecto:
+**3. Configura las variables de entorno**
 
+Crea un archivo `.env` en la raíz del proyecto:
 ```
 ANTHROPIC_API_KEY=sk-ant-...
 ```
